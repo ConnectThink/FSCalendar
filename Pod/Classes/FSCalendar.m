@@ -325,6 +325,13 @@
 
 - (void)setSelectedDate:(NSDate *)selectedDate
 {
+    if (selectedDate == nil) {
+        NSIndexPath *currentIndex = [_collectionView indexPathsForSelectedItems].lastObject;
+        [_collectionView deselectItemAtIndexPath:currentIndex animated:NO];
+        [self collectionView:_collectionView didDeselectItemAtIndexPath:currentIndex];
+        return;
+    }
+    
     NSIndexPath *selectedIndexPath = [self indexPathForDate:selectedDate];
     if (![_selectedDate fs_isEqualToDateForDay:selectedDate] && [self collectionView:_collectionView shouldSelectItemAtIndexPath:selectedIndexPath]) {
         NSIndexPath *currentIndex = [_collectionView indexPathsForSelectedItems].lastObject;
